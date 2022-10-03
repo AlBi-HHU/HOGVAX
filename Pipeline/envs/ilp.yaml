@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+  - gurobi
+dependencies:
+  - contextlib2=21.6.0
+  - pandas = 1.4.2
+  - networkx = 2.8
+  - pydot = 1.4.2
+  - gurobi = 9.5.1
+  - python = 3.9

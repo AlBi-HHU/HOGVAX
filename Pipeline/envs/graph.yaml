@@ -1,0 +1,5 @@
+channels:
+  - conda-forge
+dependencies:
+  - networkx = 2.8
+  - pydot = 1.4.2
