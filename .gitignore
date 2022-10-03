@@ -18,3 +18,5 @@
 Pipeline/*/
 !Pipeline/envs/
 !Pipeline/scripts/
+
+HOGVAX/*/
