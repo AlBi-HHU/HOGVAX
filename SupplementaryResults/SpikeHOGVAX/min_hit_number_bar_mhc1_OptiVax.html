@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "strokeOpacity": 0}, "axis": {"grid": false, "labelFontSize": 20, "titleFontSize": 20}}, "data": {"name": "data-bedc1f52f5dffd2b31039f221b642853"}, "mark": "bar", "encoding": {"color": {"field": "population", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "nominal"}, "column": {"field": "n", "title": "Minimum number of peptide-Hla hits", "type": "quantitative"}, "x": {"axis": {"labels": false, "ticks": false, "title": null}, "field": "population", "sort": ["Asians", "Black", "White", "Average"], "type": "nominal"}, "y": {"field": "prob", "title": "Population coverage", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-bedc1f52f5dffd2b31039f221b642853": [{"n": 1, "prob": 0.9324106279145923, "population": "White"}, {"n": 2, "prob": 0.8367136717549868, "population": "White"}, {"n": 3, "prob": 0.6753639095273803, "population": "White"}, {"n": 4, "prob": 0.48771784014269404, "population": "White"}, {"n": 5, "prob": 0.29863981015532337, "population": "White"}, {"n": 6, "prob": 0.15653357061749884, "population": "White"}, {"n": 7, "prob": 0.07534983017682062, "population": "White"}, {"n": 8, "prob": 0.029469626097605395, "population": "White"}, {"n": 9, "prob": 0.009550352486247471, "population": "White"}, {"n": 10, "prob": 0.0018034822018303531, "population": "White"}, {"n": 1, "prob": 0.9740684491194693, "population": "Black"}, {"n": 2, "prob": 0.894732210588356, "population": "Black"}, {"n": 3, "prob": 0.7546475274970825, "population": "Black"}, {"n": 4, "prob": 0.5861527615389821, "population": "Black"}, {"n": 5, "prob": 0.42064019258116425, "population": "Black"}, {"n": 6, "prob": 0.27889864273199505, "population": "Black"}, {"n": 7, "prob": 0.17234041144452206, "population": "Black"}, {"n": 8, "prob": 0.09658782716305636, "population": "Black"}, {"n": 9, "prob": 0.04833541110722028, "population": "Black"}, {"n": 10, "prob": 0.01954018369891264, "population": "Black"}, {"n": 1, "prob": 0.9929693702093016, "population": "Asians"}, {"n": 2, "prob": 0.8931501519658557, "population": "Asians"}, {"n": 3, "prob": 0.6979201645943787, "population": "Asians"}, {"n": 4, "prob": 0.48198188109670137, "population": "Asians"}, {"n": 5, "prob": 0.3583174387245811, "population": "Asians"}, {"n": 6, "prob": 0.24874526760861237, "population": "Asians"}, {"n": 7, "prob": 0.11306077906024325, "population": "Asians"}, {"n": 8, "prob": 0.0378473463837683, "population": "Asians"}, {"n": 9, "prob": 0.008048792770569912, "population": "Asians"}, {"n": 10, "prob": 0.002700961412219649, "population": "Asians"}, {"n": 1, "prob": 0.9664828157477877, "population": "Average"}, {"n": 2, "prob": 0.8748653447697329, "population": "Average"}, {"n": 3, "prob": 0.7093105338729471, "population": "Average"}, {"n": 4, "prob": 0.5186174942594591, "population": "Average"}, {"n": 5, "prob": 0.35919914715368956, "population": "Average"}, {"n": 6, "prob": 0.22805916031936876, "population": "Average"}, {"n": 7, "prob": 0.12025034022719532, "population": "Average"}, {"n": 8, "prob": 0.05463493321481002, "population": "Average"}, {"n": 9, "prob": 0.021978185454679222, "population": "Average"}, {"n": 10, "prob": 0.008014875770987548, "population": "Average"}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

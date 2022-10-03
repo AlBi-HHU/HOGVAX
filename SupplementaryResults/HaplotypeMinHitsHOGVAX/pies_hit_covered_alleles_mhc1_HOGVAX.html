@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0}, "axis": {"labelFontSize": 20, "titleFontSize": 20}}, "hconcat": [{"data": {"name": "data-a2fd05739044fc199ac4238ee7c8b6ab"}, "mark": {"type": "arc", "stroke": "#fff"}, "encoding": {"color": {"field": "allele_category", "scale": {"scheme": "category20b"}, "type": "nominal"}, "order": {"field": "order", "type": "quantitative"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-A", "transform": [{"calculate": "-indexof(['1.0', '2.0', '3.0', '4.0', '5.0', '6.0', '7.0', '9.0', '10.0', '11.0', 'No-BA-prediction', 'Uncovered'], datum.Origin)", "as": "order"}]}, {"data": {"name": "data-8635693659e48c4409ecbf627692c4e8"}, "mark": {"type": "arc", "stroke": "#fff"}, "encoding": {"color": {"field": "allele_category", "scale": {"scheme": "category20b"}, "type": "nominal"}, "order": {"field": "order", "type": "quantitative"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-B", "transform": [{"calculate": "-indexof(['1.0', '2.0', '3.0', '4.0', '5.0', '6.0', '7.0', '8.0', '9.0', '10.0', 'No-BA-prediction', 'Uncovered'], datum.Origin)", "as": "order"}]}, {"data": {"name": "data-3c4c36f6b369e7b034039d50ff318b39"}, "mark": {"type": "arc", "stroke": "#fff"}, "encoding": {"color": {"field": "allele_category", "scale": {"scheme": "category20b"}, "type": "nominal"}, "order": {"field": "order", "type": "quantitative"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-C", "transform": [{"calculate": "-indexof(['1.0', '2.0', '3.0', '5.0', '7.0', '8.0', 'No-BA-prediction', 'Uncovered'], datum.Origin)", "as": "order"}]}], "resolve": {"scale": {"color": "independent"}}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-a2fd05739044fc199ac4238ee7c8b6ab": [{"allele_category": "1.0", "values": 0.03176745860331173, "method": "HLA-AHOGVAX"}, {"allele_category": "2.0", "values": 0.08684305255579555, "method": "HLA-AHOGVAX"}, {"allele_category": "3.0", "values": 0.07982361411087112, "method": "HLA-AHOGVAX"}, {"allele_category": "4.0", "values": 0.33288336933045354, "method": "HLA-AHOGVAX"}, {"allele_category": "5.0", "values": 0.3332433405327574, "method": "HLA-AHOGVAX"}, {"allele_category": "6.0", "values": 0.02834773218142549, "method": "HLA-AHOGVAX"}, {"allele_category": "7.0", "values": 0.02960763138948884, "method": "HLA-AHOGVAX"}, {"allele_category": "9.0", "values": 0.002249820014398848, "method": "HLA-AHOGVAX"}, {"allele_category": "10.0", "values": 0.0027897768178545717, "method": "HLA-AHOGVAX"}, {"allele_category": "11.0", "values": 0.0024298056155507564, "method": "HLA-AHOGVAX"}, {"allele_category": "No-BA-prediction", "values": 0.059575233981281776, "method": "HLA-AHOGVAX"}, {"allele_category": "Uncovered", "values": 0.010439164866811242, "method": "HLA-AHOGVAX"}], "data-8635693659e48c4409ecbf627692c4e8": [{"allele_category": "1.0", "values": 0.07416176582906896, "method": "HLA-BHOGVAX"}, {"allele_category": "2.0", "values": 0.15794699457725506, "method": "HLA-BHOGVAX"}, {"allele_category": "3.0", "values": 0.0930268082181318, "method": "HLA-BHOGVAX"}, {"allele_category": "4.0", "values": 0.021538226533262053, "method": "HLA-BHOGVAX"}, {"allele_category": "5.0", "values": 0.01741388528221187, "method": "HLA-BHOGVAX"}, {"allele_category": "6.0", "values": 0.04315282975635836, "method": "HLA-BHOGVAX"}, {"allele_category": "7.0", "values": 0.04300007637668984, "method": "HLA-BHOGVAX"}, {"allele_category": "8.0", "values": 0.0, "method": "HLA-BHOGVAX"}, {"allele_category": "9.0", "values": 0.014664324448178417, "method": "HLA-BHOGVAX"}, {"allele_category": "10.0", "values": 0.0027495608340334533, "method": "HLA-BHOGVAX"}, {"allele_category": "No-BA-prediction", "values": 0.12143893683647748, "method": "HLA-BHOGVAX"}, {"allele_category": "Uncovered", "values": 0.4109065913083357, "method": "HLA-BHOGVAX"}], "data-3c4c36f6b369e7b034039d50ff318b39": [{"allele_category": "1.0", "values": 0.2151270923744575, "method": "HLA-CHOGVAX"}, {"allele_category": "2.0", "values": 0.22141528651138076, "method": "HLA-CHOGVAX"}, {"allele_category": "3.0", "values": 0.10911345319280842, "method": "HLA-CHOGVAX"}, {"allele_category": "5.0", "values": 0.024001417057833672, "method": "HLA-CHOGVAX"}, {"allele_category": "7.0", "values": 0.015056239482773891, "method": "HLA-CHOGVAX"}, {"allele_category": "8.0", "values": 0.01966167744221061, "method": "HLA-CHOGVAX"}, {"allele_category": "No-BA-prediction", "values": 0.0705871933398283, "method": "HLA-CHOGVAX"}, {"allele_category": "Uncovered", "values": 0.3250376405987069, "method": "HLA-CHOGVAX"}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

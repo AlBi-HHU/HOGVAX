@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0}, "axis": {"labelFontSize": 20, "titleFontSize": 20}}, "hconcat": [{"layer": [{"mark": {"type": "arc", "stroke": "#fff"}, "encoding": {"color": {"field": "allele_category", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "nominal"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-A"}, {"mark": {"type": "text", "outerRadius": 168}, "encoding": {"color": {"field": "allele_category", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "nominal"}, "text": {"field": "values", "type": "quantitative"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-A"}], "data": {"name": "data-f6e5eb37e165d75bf089b1385bc9b14b"}}, {"layer": [{"mark": {"type": "arc", "stroke": "#fff"}, "encoding": {"color": {"field": "allele_category", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "nominal"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-B"}, {"mark": {"type": "text", "outerRadius": 168}, "encoding": {"color": {"field": "allele_category", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "nominal"}, "text": {"field": "values", "type": "quantitative"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-B"}], "data": {"name": "data-bf7fae7136539d92c7755c46e0849281"}}, {"layer": [{"mark": {"type": "arc", "stroke": "#fff"}, "encoding": {"color": {"field": "allele_category", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "nominal"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-C"}, {"mark": {"type": "text", "outerRadius": 168}, "encoding": {"color": {"field": "allele_category", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "nominal"}, "text": {"field": "values", "type": "quantitative"}, "theta": {"field": "values", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-C"}], "data": {"name": "data-103e04c45e7ce42325a7c225959cff57"}}], "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-f6e5eb37e165d75bf089b1385bc9b14b": [{"allele_category": "Covered", "values": 0.93}, {"allele_category": "No-BA-prediction", "values": 0.0596}, {"allele_category": "Uncovered", "values": 0.0104}], "data-bf7fae7136539d92c7755c46e0849281": [{"allele_category": "Covered", "values": 0.4677}, {"allele_category": "No-BA-prediction", "values": 0.1214}, {"allele_category": "Uncovered", "values": 0.4109}], "data-103e04c45e7ce42325a7c225959cff57": [{"allele_category": "Covered", "values": 0.6044}, {"allele_category": "No-BA-prediction", "values": 0.0706}, {"allele_category": "Uncovered", "values": 0.325}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

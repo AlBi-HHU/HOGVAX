@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0}, "axis": {"labelFontSize": 20, "titleFontSize": 20}}, "hconcat": [{"layer": [{"data": {"name": "data-862dc65ea7ab3f53398928ceea806e38"}, "mark": {"type": "bar", "color": "#9AD6E5"}, "encoding": {"x": {"bin": {"maxbins": 30}, "field": "count", "title": "Number of peptide-HLA hits", "type": "quantitative"}, "y": {"field": "prob", "title": "Frequency", "type": "quantitative"}}, "title": "White"}, {"data": {"name": "data-f6698963f8595a248cc31b5225152cf3"}, "mark": {"type": "rule", "color": "#FFAD00", "size": 4}, "encoding": {"x": {"field": "expected", "type": "quantitative"}}}, {"data": {"name": "data-f6698963f8595a248cc31b5225152cf3"}, "mark": {"type": "text", "align": "left", "baseline": "middle", "color": "#FFAD00", "dx": 7}, "encoding": {"text": {"field": "expected", "format": ",.3f", "type": "quantitative"}, "x": {"field": "expected", "type": "quantitative"}}}]}, {"layer": [{"data": {"name": "data-07b292616db05f3f0300d62b8b1cbcf2"}, "mark": {"type": "bar", "color": "#9AD6E5"}, "encoding": {"x": {"bin": {"maxbins": 30}, "field": "count", "title": "Number of peptide-HLA hits", "type": "quantitative"}, "y": {"field": "prob", "title": "Frequency", "type": "quantitative"}}, "title": "Black"}, {"data": {"name": "data-2d4ed3f6871c332630bb161e729382e6"}, "mark": {"type": "rule", "color": "#FFAD00", "size": 4}, "encoding": {"x": {"field": "expected", "type": "quantitative"}}}, {"data": {"name": "data-2d4ed3f6871c332630bb161e729382e6"}, "mark": {"type": "text", "align": "left", "baseline": "middle", "color": "#FFAD00", "dx": 7}, "encoding": {"text": {"field": "expected", "format": ",.3f", "type": "quantitative"}, "x": {"field": "expected", "type": "quantitative"}}}]}, {"layer": [{"data": {"name": "data-6771515b735c53bc0a3509799bd2734b"}, "mark": {"type": "bar", "color": "#9AD6E5"}, "encoding": {"x": {"bin": {"maxbins": 30}, "field": "count", "title": "Number of peptide-HLA hits", "type": "quantitative"}, "y": {"field": "prob", "title": "Frequency", "type": "quantitative"}}, "title": "Asians"}, {"data": {"name": "data-aaec875aeb5ee0aedd7d19e8ea995740"}, "mark": {"type": "rule", "color": "#FFAD00", "size": 4}, "encoding": {"x": {"field": "expected", "type": "quantitative"}}}, {"data": {"name": "data-aaec875aeb5ee0aedd7d19e8ea995740"}, "mark": {"type": "text", "align": "left", "baseline": "middle", "color": "#FFAD00", "dx": 7}, "encoding": {"text": {"field": "expected", "format": ",.3f", "type": "quantitative"}, "x": {"field": "expected", "type": "quantitative"}}}]}], "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-862dc65ea7ab3f53398928ceea806e38": [{"count": 0, "prob": 0.06758937208540768}, {"count": 1, "prob": 0.09569695615960556}, {"count": 2, "prob": 0.16134976222760639}, {"count": 3, "prob": 0.18764606938468628}, {"count": 4, "prob": 0.18907802998737067}, {"count": 5, "prob": 0.14210623953782453}, {"count": 6, "prob": 0.08118374044067822}, {"count": 7, "prob": 0.04588020407921522}, {"count": 8, "prob": 0.01991927361135793}, {"count": 9, "prob": 0.007746870284417163}, {"count": 10, "prob": 0.0014879739494117379}, {"count": 11, "prob": 0.0002840599021786707}, {"count": 12, "prob": 3.0013566748020085e-05}, {"count": 13, "prob": 1.3423418713165584e-06}, {"count": 14, "prob": 9.244186493691868e-08}, {"count": 15, "prob": 0.0}, {"count": 16, "prob": 0.0}], "data-f6698963f8595a248cc31b5225152cf3": [{"expected": 3.503901204906172}], "data-07b292616db05f3f0300d62b8b1cbcf2": [{"count": 0, "prob": 0.025931550880530688}, {"count": 1, "prob": 0.0793362385311134}, {"count": 2, "prob": 0.14008468309127345}, {"count": 3, "prob": 0.16849476595810042}, {"count": 4, "prob": 0.16551256895781774}, {"count": 5, "prob": 0.14174154984916923}, {"count": 6, "prob": 0.10655823128747303}, {"count": 7, "prob": 0.0757525842814657}, {"count": 8, "prob": 0.04825241605583611}, {"count": 9, "prob": 0.028795227408307658}, {"count": 10, "prob": 0.012614326305157927}, {"count": 11, "prob": 0.004880809439383242}, {"count": 12, "prob": 0.0015687452358325554}, {"count": 13, "prob": 0.0003982594110880055}, {"count": 14, "prob": 6.680949988013879e-05}, {"count": 15, "prob": 8.533164770788327e-06}, {"count": 16, "prob": 2.7006428492354285e-06}], "data-2d4ed3f6871c332630bb161e729382e6": [{"expected": 4.255482803296037}], "data-6771515b735c53bc0a3509799bd2734b": [{"count": 0, "prob": 0.007030629790698364}, {"count": 1, "prob": 0.09981921824344599}, {"count": 2, "prob": 0.19522998737147698}, {"count": 3, "prob": 0.2159382834976773}, {"count": 4, "prob": 0.12366444237212021}, {"count": 5, "prob": 0.10957217111596876}, {"count": 6, "prob": 0.13568448854836912}, {"count": 7, "prob": 0.07521343267647497}, {"count": 8, "prob": 0.02979855361319842}, {"count": 9, "prob": 0.005347831358350252}, {"count": 10, "prob": 0.002411099335967603}, {"count": 11, "prob": 0.00028468262008907196}, {"count": 12, "prob": 5.179456197033931e-06}, {"count": 13, "prob": 0.0}, {"count": 14, "prob": 0.0}, {"count": 15, "prob": 0.0}, {"count": 16, "prob": 0.0}], "data-aaec875aeb5ee0aedd7d19e8ea995740": [{"expected": 3.835037195359056}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

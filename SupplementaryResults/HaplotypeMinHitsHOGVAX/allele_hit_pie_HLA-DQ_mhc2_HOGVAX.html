@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0}, "axis": {"labelFontSize": 20, "titleFontSize": 20}}, "layer": [{"mark": "arc", "encoding": {"color": {"bin": {"maxbins": 10}, "field": "hits", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "quantitative"}, "theta": {"field": "count", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-DQ"}, {"mark": {"type": "text", "outerRadius": 168}, "encoding": {"color": {"bin": {"maxbins": 10}, "field": "hits", "scale": {"range": ["#9AD6E5", "#66A6D9", "#BBB465", "#FFC12C", "#DA0034", "#3A7A9B", "#FFAD00"]}, "type": "quantitative"}, "text": {"field": "hits", "type": "quantitative"}, "theta": {"field": "count", "stack": true, "type": "quantitative"}}, "title": "Coverage of alleles at HLA-DQ"}], "data": {"name": "data-697e103f1cbf8d752439ce1ce1c20e1e"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-697e103f1cbf8d752439ce1ce1c20e1e": [{"hits": 0.0, "count": 62, "frac": 0.6888888888888889}, {"hits": 4.0, "count": 1, "frac": 0.011111111111111112}, {"hits": 6.0, "count": 1, "frac": 0.011111111111111112}, {"hits": 12.0, "count": 5, "frac": 0.05555555555555555}, {"hits": 19.0, "count": 1, "frac": 0.011111111111111112}, {"hits": 21.0, "count": 3, "frac": 0.03333333333333333}, {"hits": 24.0, "count": 2, "frac": 0.022222222222222223}, {"hits": 28.0, "count": 10, "frac": 0.1111111111111111}, {"hits": 29.0, "count": 1, "frac": 0.011111111111111112}, {"hits": 30.0, "count": 2, "frac": 0.022222222222222223}, {"hits": 35.0, "count": 1, "frac": 0.011111111111111112}, {"hits": 61.0, "count": 1, "frac": 0.011111111111111112}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

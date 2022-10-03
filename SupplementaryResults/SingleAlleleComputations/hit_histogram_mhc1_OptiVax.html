@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0}}, "hconcat": [{"layer": [{"data": {"name": "data-326f825502d1d6aa5c81973694e44d44"}, "mark": {"type": "bar", "color": "#9AD6E5"}, "encoding": {"x": {"bin": {"maxbins": 30}, "field": "count", "title": "Number of peptide-HLA hits", "type": "quantitative"}, "y": {"field": "prob", "title": "Frequency", "type": "quantitative"}}, "title": "White"}, {"data": {"name": "data-a95f4bcc788197c2a2c2e8763899ecbc"}, "mark": {"type": "rule", "color": "#FFAD00", "size": 4}, "encoding": {"x": {"field": "expected", "type": "quantitative"}}}, {"data": {"name": "data-a95f4bcc788197c2a2c2e8763899ecbc"}, "mark": {"type": "text", "align": "left", "baseline": "middle", "color": "#FFAD00", "dx": 7}, "encoding": {"text": {"field": "expected", "format": ",.3f", "type": "quantitative"}, "x": {"field": "expected", "type": "quantitative"}}}]}, {"layer": [{"data": {"name": "data-8ad5ba4c839b46ca2de68d575b2fc3e3"}, "mark": {"type": "bar", "color": "#9AD6E5"}, "encoding": {"x": {"bin": {"maxbins": 30}, "field": "count", "title": "Number of peptide-HLA hits", "type": "quantitative"}, "y": {"field": "prob", "title": "Frequency", "type": "quantitative"}}, "title": "Black"}, {"data": {"name": "data-99a133fc38f967e9a96a1134f141df64"}, "mark": {"type": "rule", "color": "#FFAD00", "size": 4}, "encoding": {"x": {"field": "expected", "type": "quantitative"}}}, {"data": {"name": "data-99a133fc38f967e9a96a1134f141df64"}, "mark": {"type": "text", "align": "left", "baseline": "middle", "color": "#FFAD00", "dx": 7}, "encoding": {"text": {"field": "expected", "format": ",.3f", "type": "quantitative"}, "x": {"field": "expected", "type": "quantitative"}}}]}, {"layer": [{"data": {"name": "data-82cd9fe38385fb3488b99d6b09a555e8"}, "mark": {"type": "bar", "color": "#9AD6E5"}, "encoding": {"x": {"bin": {"maxbins": 30}, "field": "count", "title": "Number of peptide-HLA hits", "type": "quantitative"}, "y": {"field": "prob", "title": "Frequency", "type": "quantitative"}}, "title": "Asians"}, {"data": {"name": "data-f35396151ec8ecf8c1a83341a433f55c"}, "mark": {"type": "rule", "color": "#FFAD00", "size": 4}, "encoding": {"x": {"field": "expected", "type": "quantitative"}}}, {"data": {"name": "data-f35396151ec8ecf8c1a83341a433f55c"}, "mark": {"type": "text", "align": "left", "baseline": "middle", "color": "#FFAD00", "dx": 7}, "encoding": {"text": {"field": "expected", "format": ",.3f", "type": "quantitative"}, "x": {"field": "expected", "type": "quantitative"}}}]}], "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-326f825502d1d6aa5c81973694e44d44": [{"count": 0, "prob": 1.0431981965390796e-07}, {"count": 1, "prob": 0.0003586668686211842}, {"count": 2, "prob": 0.011531295249693851}, {"count": 3, "prob": 0.030651502163465235}, {"count": 4, "prob": 0.08851930986637725}, {"count": 5, "prob": 0.16340887048608765}, {"count": 6, "prob": 0.19927562587718692}, {"count": 7, "prob": 0.15616133267144255}, {"count": 8, "prob": 0.11645147952737214}, {"count": 9, "prob": 0.0882880783441899}, {"count": 10, "prob": 0.06966765325064131}, {"count": 11, "prob": 0.04318174273003967}, {"count": 12, "prob": 0.019163855373625912}, {"count": 13, "prob": 0.008409480747413605}, {"count": 14, "prob": 0.0026695518902654083}, {"count": 15, "prob": 0.0020571286866929712}, {"count": 16, "prob": 0.0001391839695412214}, {"count": 17, "prob": 3.809421763509793e-05}, {"count": 18, "prob": 1.3260033091416605e-05}, {"count": 19, "prob": 1.3691285140401403e-05}, {"count": 20, "prob": 0.0}, {"count": 21, "prob": 9.244186493691868e-08}], "data-a95f4bcc788197c2a2c2e8763899ecbc": [{"expected": 6.884056156040039}], "data-8ad5ba4c839b46ca2de68d575b2fc3e3": [{"count": 0, "prob": 0.00019037320001298458}, {"count": 1, "prob": 0.0035412088772990044}, {"count": 2, "prob": 0.01774887157690353}, {"count": 3, "prob": 0.05050127488001071}, {"count": 4, "prob": 0.09869768992287321}, {"count": 5, "prob": 0.1448654951710599}, {"count": 6, "prob": 0.1614131910602912}, {"count": 7, "prob": 0.14755333079050137}, {"count": 8, "prob": 0.11494405477386294}, {"count": 9, "prob": 0.08578601782218793}, {"count": 10, "prob": 0.06514275493751644}, {"count": 11, "prob": 0.04873774528763781}, {"count": 12, "prob": 0.031034196267742554}, {"count": 13, "prob": 0.017563423594600277}, {"count": 14, "prob": 0.007559101207167049}, {"count": 15, "prob": 0.003076484233248712}, {"count": 16, "prob": 0.0012686058946573414}, {"count": 17, "prob": 0.00028702427953317393}, {"count": 18, "prob": 8.568769361511144e-05}, {"count": 19, "prob": 2.8771656768415634e-06}, {"count": 20, "prob": 5.913636735054148e-07}, {"count": 21, "prob": 0.0}], "data-99a133fc38f967e9a96a1134f141df64": [{"expected": 6.969678341557731}], "data-82cd9fe38385fb3488b99d6b09a555e8": [{"count": 0, "prob": 0.0}, {"count": 1, "prob": 6.416124789068595e-05}, {"count": 2, "prob": 0.013362564025906591}, {"count": 3, "prob": 0.017452135857063542}, {"count": 4, "prob": 0.04122818442788108}, {"count": 5, "prob": 0.09377708384829216}, {"count": 6, "prob": 0.11292430889645957}, {"count": 7, "prob": 0.14318529061023885}, {"count": 8, "prob": 0.1457310938919302}, {"count": 9, "prob": 0.14106764085949985}, {"count": 10, "prob": 0.11676295909723841}, {"count": 11, "prob": 0.06789344308964511}, {"count": 12, "prob": 0.05629421961585755}, {"count": 13, "prob": 0.03838144650199308}, {"count": 14, "prob": 0.008613846795624467}, {"count": 15, "prob": 0.00269464169652035}, {"count": 16, "prob": 0.00045011977162413017}, {"count": 17, "prob": 0.00010552776776621763}, {"count": 18, "prob": 1.1331998562802441e-05}, {"count": 19, "prob": 0.0}, {"count": 20, "prob": 0.0}, {"count": 21, "prob": 0.0}], "data-f35396151ec8ecf8c1a83341a433f55c": [{"expected": 8.08740451017862}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

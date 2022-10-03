@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}, "axis": {"labelFontSize": 20, "titleFontSize": 20}}, "layer": [{"mark": "bar", "encoding": {"color": {"field": "Method", "legend": null, "scale": {"domain": ["MHCI OptiVax-Unlinked", "MHCI HOGVAX", "MHCII OptiVax-Unlinked", "MHCII HOGVAX"], "range": ["#9ad6e5", "#3a7a9b", "#9ad6e5", "#3a7a9b"]}, "type": "nominal"}, "x": {"field": "Method", "type": "nominal"}, "y": {"axis": {"titleColor": "#3a7a9b"}, "field": "Population Coverage", "scale": {"domain": [0.87, 1.0]}, "type": "quantitative"}}}, {"mark": {"type": "circle", "color": "#FFAD00", "size": 60}, "encoding": {"x": {"field": "Method", "type": "nominal"}, "y": {"axis": {"titleColor": "#FFAD00"}, "field": "Number of Peptides", "type": "quantitative"}}}], "data": {"name": "data-728fcc069ed2d6689f8b4e9eee953806"}, "resolve": {"scale": {"y": "independent"}}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-728fcc069ed2d6689f8b4e9eee953806": [{"Method": "MHCI OptiVax-Unlinked", "Population Coverage": 0.8801156847533053, "Number of Peptides": 19}, {"Method": "MHCI HOGVAX", "Population Coverage": 0.8880697526406931, "Number of Peptides": 149}, {"Method": "MHCII OptiVax-Unlinked", "Population Coverage": 0.9300214630615633, "Number of Peptides": 19}, {"Method": "MHCII HOGVAX", "Population Coverage": 0.9635200707398426, "Number of Peptides": 1180}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
