@@ -8,9 +8,9 @@ logging: True
 approach: 'hog' # choose either hog or og
 min_hits: 1 # choose min number of hits for an allele / haplotype to be covered
 
-peptides: '/home/sara/Documents/MasterThesis_Submission/hogvax/OptiVax_Data/Peptides/30_filtered_mhc_peptides.pep'
-frequency_data: '/home/sara/Documents/MasterThesis_Submission/hogvax/OptiVax_Data/Frequencies/IEDB_population_frequency2392_normalized.pkl'
-binding_affinities: '/home/sara/Documents/MasterThesis_Submission/hogvax/OptiVax_Data/BindingAffinities/25June_mhc1_netmhc-4.1_pred_affinity_pivot.pkl.gz'
+peptides: '../OptiVax_Data/Peptides/30_filtered_mhc_peptides.pep'
+frequency_data: '../OptiVax_Data/Frequencies/IEDB_population_frequency2392_normalized.pkl'
+binding_affinities: '../OptiVax_Data/BindingAffinities/25June_mhc1_netmhc-4.1_pred_affinity_pivot.pkl.gz'
 # optional: if use embedded peptides add non-embedded peptides here
 # embedded length is either an int value
 embedding_length: 0
