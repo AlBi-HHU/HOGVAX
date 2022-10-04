@@ -12,7 +12,8 @@
 **.pickle
 *.log
 
-!OptiVax_Data/
+OptiVax_Data/
+download.zip
 
 **/.snakemake
 Pipeline/*/
