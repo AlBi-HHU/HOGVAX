@@ -88,6 +88,8 @@ rule modify_ba_predictions_for_substrings:
         config['output_dir'] + '/data/substr_modified_ba_prediction_data.pkl.gz'
     params:
         pep = define_param()
+    conda:
+        'envs/ilp.yaml'
     script:
         'scripts/filter_substrings_in_ba_predictions.py'
 
@@ -100,6 +102,8 @@ rule set_index_in_ba_predictions:
         config['output_dir'] + '/data/embedded_substr_modified_ba_prediction_data.pkl.gz'
     params:
         pep = peptides
+    conda:
+        'envs/ilp.yaml'
     script:
         'scripts/binding_affinities_for_embedded_peptide.py'
 
