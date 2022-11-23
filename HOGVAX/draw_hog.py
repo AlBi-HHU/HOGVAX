@@ -29,4 +29,4 @@ def draw_hog(hog, leaves, vals, key, draw_all=False):
         attr = node.get_attributes()
         node.set_label(node.get_name() + ', ' + attr['string'] + ', ' + attr['interval_size'])
 
-    dot.write_png('peptides_output/' + key + '_colored_graph.png')
+    dot.write_png(key)

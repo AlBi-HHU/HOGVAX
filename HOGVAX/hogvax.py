@@ -60,6 +60,8 @@ def main():
     args = get_parser().parse_args()
 
     if args.outdir:
+        if '/' not in args.outdir:
+            args.outdir = args.outdir + '/'
         if not os.path.exists(args.outdir):
             os.mkdir(args.outdir)
 
@@ -69,7 +71,7 @@ def main():
     pep_count = len(peptides)
 
     drawing_enabled = False
-    if pep_count < 30:
+    if pep_count <= 30:
         print('Number of peptides below 30 -> drawing enabled')
         drawing_enabled = True
 
