@@ -4,7 +4,7 @@ import gzip
 import pickle
 import networkx as nx
 import pandas as pd
-import gurobipy as gp
+import gurobi as gp
 import aho_corasick_trie
 import linear_time_hog
 import filter_substrings_in_ba_predictions

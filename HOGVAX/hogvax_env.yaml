@@ -7,5 +7,8 @@ dependencies:
   - pandas = 1.4.2
   - networkx = 2.8
   - pydot = 1.4.2
-  - gurobi = 9.5.1
+  - gurobi = 10.0.0
   - python = 3.9
+  - pip
+  - pip:
+      - gurobipy==10.0.0
