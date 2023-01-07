@@ -31,7 +31,7 @@ for edge in hog.edges():
     edge_dict[key] = edge
 
 # create subgraph from edges chosen by ILP in order to find eulerian path to construct vaccine sequence
-sub_hog = nx.DiGraph()
+sub_hog = nx.MultiDiGraph()
 sub_hog.add_edges_from([edge_dict[e] for e in edge_dict if e in edges])
 print(sub_hog)
 print(nx.is_eulerian(sub_hog))

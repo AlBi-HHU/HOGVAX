@@ -61,8 +61,8 @@ def solve_msks_hog(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, 
 
     # create new model
     m = gp.Model('ivp_on_hog')
-    # set time limit to 10 hours
-    m.setParam('TimeLimit', 36000)
+    # set time limit to 48 hours
+    m.setParam('TimeLimit', 172800)
     m.setParam('Seed', 42)
     # m.setParam('PoolSearchMode', 2)
     # m.setParam('PoolSolutions', 5)
@@ -78,7 +78,7 @@ def solve_msks_hog(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, 
     log('Create edge variables')
     x_edges = gp.tupledict()
     for node_a, node_b in sorted(graph.edges):
-        x_edges[node_a, node_b] = m.addVar(vtype=GRB.BINARY,
+        x_edges[node_a, node_b] = m.addVar(vtype=GRB.INTEGER,
                                            name=graph.nodes[node_a]['string'] + '_' + graph.nodes[node_b]['string'])
 
     # the objective function is to maximize population coverage
@@ -130,7 +130,8 @@ def solve_msks_hog(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, 
         sol = m.getAttr('X', x_edges)
         for node_a, node_b in x_edges:
             # print('%s -> %s: %g' % (node_a, node_b, sol[node_a, node_b]))
-            if sol[node_a, node_b] >= 0.5:
+            traversals = round(sol[node_a, node_b])
+            for i in range(traversals):
                 if node_a in leaves.values():
                     chosen_pep.append(graph.nodes[node_a]['string'])
                 if node_b in leaves.values():
