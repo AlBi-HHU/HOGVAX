@@ -57,17 +57,13 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
 
     # create new model
     m = gp.Model('ivp_on_hog')
-    # set time limit to 10 hours
-    m.setParam('TimeLimit', 36000)
+    # set time limit to 48 hours
+    m.setParam('TimeLimit', 172800)
     m.setParam('Seed', 42)
     random.seed(42)
     numpy.random.seed(42)
-    m.setParam('PoolSearchMode', 2)
-    m.setParam('PoolSolutions', 10000)
-    m.setParam('PoolGap', 0.0)
     if not os.path.exists(path + 'lp_out/'):
         os.mkdir(path + 'lp_out/')
-    m.setParam('SolFiles', path + 'lp_out/' + pep_count)
 
     # create hit variables
     log('Create hit variables')
@@ -79,7 +75,7 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
     log('Create edge variables')
     x_edges = gp.tupledict()
     for node_a, node_b in sorted(graph.edges):
-        x_edges[node_a, node_b] = m.addVar(vtype=GRB.BINARY,
+        x_edges[node_a, node_b] = m.addVar(vtype=GRB.INTEGER,
                                            name=graph.nodes[node_a]['string'] + '_' + graph.nodes[node_b]['string'])
 
     # the objective function is to maximize population coverage
@@ -133,7 +129,9 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
         for edge in x_edges:
             node_a, node_b = edge
             # print('%s -> %s: %g' % (node_a, node_b, sol[node_a, node_b]))
-            if sol[node_a, node_b] >= 0.5:
+            # variable tolerance of gurobi is 1e-5
+            traversals = round(sol[node_a, node_b])
+            for i in range(traversals):
                 solution_edges.append(edge)
                 if node_a in leaves.values():
                     chosen_pep.append(graph.nodes[node_a]['string'])
@@ -159,8 +157,9 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
         file.write('\n'.join(chosen_pep))
 
     # create subgraph from edges chosen by ILP in order to find eulerian path to construct vaccine sequence
+    # use multi graph here to add edges that are traversed more than once multiple times to the graph
     log('Create vaccine sequence')
-    sub_hog = nx.DiGraph()
+    sub_hog = nx.MultiDiGraph()
     sub_hog.add_edges_from(solution_edges)
     log('sub graph is eulerian' + str(nx.is_eulerian(sub_hog)))
     if coloring:

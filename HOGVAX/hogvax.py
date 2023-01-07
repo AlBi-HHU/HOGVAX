@@ -24,7 +24,7 @@ def get_parser():
                         help='Preprocessed peptide file with every peptide in a new line.')
     parser.add_argument('--allele-frequencies', '-af', dest='f_data', required=True, type=str,
                         help='(Normalized) allele frequency file.')
-    parser.add_argument('--ba-threshold', '-t', dest='ba_threshold', type=float,
+    parser.add_argument('--ba-threshold', '-t', dest='ba_threshold', default=0.638, type=float,
                         help='If provided, binding affinities are converted to binary data.')
     parser.add_argument('--binding-affinities', '-ba', dest='ba_matrix', required=True, type=str,
                         help='Binding affinity file for input peptides and alleles.')
@@ -60,7 +60,7 @@ def main():
     args = get_parser().parse_args()
 
     if args.outdir:
-        if '/' not in args.outdir:
+        if not args.outdir.endswith('/'):
             args.outdir = args.outdir + '/'
         if not os.path.exists(args.outdir):
             os.mkdir(args.outdir)
