@@ -28,8 +28,12 @@ def get_parser():
                         help='If provided, binding affinities are converted to binary data.')
     parser.add_argument('--binding-affinities', '-ba', dest='ba_matrix', required=True, type=str,
                         help='Binding affinity file for input peptides and alleles.')
+    parser.add_argument('--required_epitopes', '-epi', dest='required_epitopes',
+                        help='File of peptides you want to be present in vaccine')
     parser.add_argument('--min-hits', '-mh', dest='min_hits', default=1, type=int,
                         help='Minimum number of hits for an allele to be covered')
+    parser.add_argument('--maximize-peptides', dest='maximize_peptides', default=False,
+                        help='Maximize number of peptides in the vaccine in a second optimization')
     parser.add_argument('--embedding-length', default=0, type=int, help='Set length of embedding if used')
     parser.add_argument('--embedded-peptides', type=str, help='File containing embedded peptides')
     parser.add_argument('--embedded-epitope_features', type=str, help='Path to embedded epitope features')
@@ -70,8 +74,13 @@ def main():
     peptides = read_peptides(args.peptides)
     pep_count = len(peptides)
 
+    required_peptides = []
+    if args.required_epitopes:
+        print('Reading required epitopes')
+        required_peptides = read_peptides(args.required_epitopes)
+
     drawing_enabled = False
-    if pep_count <= 30:
+    if pep_count < 30:
         print('Number of peptides below 30 -> drawing enabled')
         drawing_enabled = True
 
@@ -100,9 +109,7 @@ def main():
         leaves_dict, hog = linear_time_hog.compute_hog(str(pep_count), peptides, args.outdir, drawing_enabled)
 
     print('Binarize ba predictions')
-    if args.ba_threshold:
-        print(args.ba_threshold)
-        bin_matrix = binarize_entries(mod_ba_df, args.ba_threshold)
+    bin_matrix = binarize_entries(mod_ba_df, args.ba_threshold)
 
     full_known_alleles = gp.tuplelist(key for key in f_data.keys() if key in bin_matrix.keys())
 
@@ -117,6 +124,8 @@ def main():
                                         min_hits=args.min_hits,
                                         populations=args.populations,
                                         path=args.outdir,
+                                        optional_peptides=required_peptides,
+                                        maximize_peptides=args.maximize_peptides,
                                         logging=args.logging_enabled,
                                         coloring=drawing_enabled)
 
