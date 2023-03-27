@@ -25,14 +25,9 @@ def subtour_elim_boekler_paper(model, where):
             subtour = sorted(list(subtour), key=int)
             log('## Subtour ' + ', '.join(subtour))
             save_for_later.append(subtour)
-            # for each subtour that does not contain the root node, we require an incoming edge from the outside
-            for node in subtour:
-                model.cbLazy(gp.quicksum(model._x_edges.select('*', node)) <=
-                             gp.quicksum(model._x_edges[node_outer, node_inner] for node_outer, node_inner in sorted(model._x_edges)
-                                         if node_inner in subtour and node_outer not in subtour),
-                             'At least one incoming edge to subtour ' + '_'.join(subtour) + ' from the outside')
-                # first add constraint only for single node, if this does not work, add it for all nodes in cycle
-                break
+            model.cbLazy(1 <= gp.quicksum(model._x_edges[node_outer, node_inner] for node_outer, node_inner in sorted(model._x_edges)
+                                          if node_inner in subtour and node_outer not in subtour),
+                         'At least one incoming edge to subtour ' + '_'.join(subtour) + ' from the outside')
 
 
 def find_subtour(vals, graph):
@@ -51,7 +46,7 @@ def find_subtour(vals, graph):
     return subtours
 
 
-def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, min_hits=1, populations=['World'], logging=False, coloring=False):
+def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, min_hits=1, populations=['World'], optional_peptides=[], maximize_peptides=False, logging=False, coloring=False):
     global logging_enabled
     logging_enabled = logging
 
@@ -62,14 +57,21 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
     m.setParam('Seed', 42)
     random.seed(42)
     numpy.random.seed(42)
-    if not os.path.exists(path + 'lp_out/'):
-        os.mkdir(path + 'lp_out/')
+    # only for debugging, lp files becomes very large
+    # if not os.path.exists(path + 'lp_out/'):
+    #     os.mkdir(path + 'lp_out/')
 
     # create hit variables
     log('Create hit variables')
     hit = gp.tupledict()
     for allele in alleles:
         hit[allele] = m.addVar(vtype=GRB.BINARY, name='_'.join(allele).replace(':', '-'))
+
+    # create node variables
+    log('Create node variables for peptide nodes')
+    x_nodes = gp.tupledict()
+    for node in leaves.values():
+        x_nodes[node] = m.addVar(vtype=GRB.BINARY, name=graph.nodes[node]['string'])
 
     # create edge variables
     log('Create edge variables')
@@ -87,15 +89,24 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
     log('Add >>At least one outgoing edge from root<< constraint')
     m.addConstr(x_edges.sum('0', '*') >= 1, 'At least one outgoing edge from root')
 
+    # optionally force include peptides in vaccine
+    if optional_peptides:
+        for p in optional_peptides:
+            n = leaves[p]
+            m.addConstr(x_nodes[n] >= 1, 'Must include peptide ' + p)
+
     log('Add >>Sum of edge weights below threshold k<< constraint')
     m.addConstr(gp.quicksum(x_edges[node_a, node_b] * graph.edges[node_a, node_b]['weight']
                             for node_a, node_b in sorted(graph.edges)) <= k, 'Sum of edge weights below threshold k')
-
 
     log('Add flow conservation for nodes')
     for node in sorted(graph.nodes):
         m.addConstr(x_edges.sum('*', node) == x_edges.sum(node, '*'),
                     'Flow conservation at node ' + str(node))
+
+    log('Add peptide node visiting constraint')
+    for pep, node in leaves.items():
+        m.addConstr(x_nodes[node] <= x_edges.sum('*', node), 'Node visiting constraint for ' + pep)
 
     '''
     without this update function, the data will be cached in some intermediate storage that might require more memory
@@ -122,6 +133,20 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
     # Solve
     log('Now optimize:')
     m.optimize(subtour_elim_boekler_paper)
+
+    # 2nd optimization: maximize number of peptides
+    if maximize_peptides:
+        # require optimal solution for first objective function
+        assert m.Status == GRB.Status.OPTIMAL
+        opt_coverage = m.getObjective()
+        # set new objective function
+        # maximize number of selected peptides
+        m.setObjective(gp.quicksum(x_nodes), GRB.MAXIMIZE)
+
+        # add previous objective function with objective value as constraint
+        m.addConstr(gp.quicksum(hit[allele] * freq_vector[allele][pop] for pop in populations for allele in alleles) >= opt_coverage.getValue(),
+                    'Add maximal population coverage as constraint')
+        m.optimize(subtour_elim_boekler_paper)
 
     solution_edges = []
     if m.Status == GRB.OPTIMAL:
@@ -165,9 +190,10 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
     if coloring:
         dot = nx.drawing.nx_pydot.to_pydot(sub_hog)
         dot.write_png(path + 'pep_out/' + pep_count + '_sub_hog.png')
+        draw_hog.draw_hog(graph, leaves, sol, path + 'pep_out/' + pep_count + '_colored_sub_hog.png')
 
     hogvaxine = ''
-    for e in nx.eulerian_circuit(sub_hog):
+    for e in nx.eulerian_circuit(sub_hog, source='0'):
         if graph.edges[e]['is_slink'] == 'yes':
             continue
         else:
@@ -184,13 +210,9 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
 
     # after solving add lazy constraints to lp file
     for i, subtour in enumerate(save_for_later):
-        for node in subtour:
-            m.addConstr(gp.quicksum(m._x_edges.select('*', node)) <=
-                        gp.quicksum(m._x_edges[node_outer, node_inner] for node_outer, node_inner in m._x_edges
-                                    if node_inner in subtour and node_outer not in subtour),
-                        'Subtour elimination ' + node)
-            # first add constraint only for single node, if this does not work, add it for all nodes in cycle
-            break
+        m.addConstr(1 <= gp.quicksum(x_edges[node_outer, node_inner] for node_outer, node_inner in sorted(x_edges)
+                                     if node_inner in subtour and node_outer not in subtour),
+                    'At least one incoming edge to subtour ' + str(i) + ' from the outside')
 
     m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.lp')
 
