@@ -32,8 +32,8 @@ def get_parser():
                         help='File of peptides you want to be present in vaccine')
     parser.add_argument('--min-hits', '-mh', dest='min_hits', default=1, type=int,
                         help='Minimum number of hits for an allele to be covered')
-    parser.add_argument('--maximize-peptides', dest='maximize_peptides', default=False,
-                        help='Maximize number of peptides in the vaccine in a second optimization')
+    parser.add_argument('--maximize-peptides', dest='maximize_peptides',  action='store_const', const=True,
+                        default=False, help='Maximize number of peptides in the vaccine in a second optimization')
     parser.add_argument('--embedding-length', default=0, type=int, help='Set length of embedding if used')
     parser.add_argument('--embedded-peptides', type=str, help='File containing embedded peptides')
     parser.add_argument('--embedded-epitope_features', type=str, help='Path to embedded epitope features')
