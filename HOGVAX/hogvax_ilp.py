@@ -116,9 +116,9 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
     log('Add allele hit constraint')
     for allele in alleles:
         # check for peptides (leaf nodes) with non-zero entry in B matrix for current allele
-        hit_leaves = list(filter(lambda x: 1.0 == B_matrix[allele][x], leaves.keys()))
+        hit_pep = list(filter(lambda x: 1.0 == B_matrix[allele][x], leaves.keys()))
         # only sum over such peptides instead of summing over all peptides -> only beneficial for ba threshold > 0.xx
-        m.addConstr(hit[allele] * min_hits <= gp.quicksum(x_edges.sum('*', leaves[leaf]) for leaf in hit_leaves),
+        m.addConstr(hit[allele] * min_hits <= gp.quicksum(x_nodes[leaves[pep]] for pep in hit_pep),
                     'Peptide-hit for allele ' + '_'.join(allele))
     m.update()
 
@@ -163,10 +163,11 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
                 if node_b in leaves.values():
                     chosen_pep.append(graph.nodes[node_b]['string'])
 
-    if not os.path.exists(path + 'lp_out/'):
-        os.mkdir(path + 'lp_out/')
-    m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.sol')
-    m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.json')
+    # also only for more details and debugging
+    # if not os.path.exists(path + 'lp_out/'):
+    #     os.mkdir(path + 'lp_out/')
+    # m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.sol')
+    # m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.json')
 
     if not os.path.exists(path + 'pep_out/'):
         os.mkdir(path + 'pep_out/')
@@ -214,6 +215,7 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
                                      if node_inner in subtour and node_outer not in subtour),
                     'At least one incoming edge to subtour ' + str(i) + ' from the outside')
 
-    m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.lp')
+    # only for debugging, lp file becomes quite large
+    # m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.lp')
 
     return chosen_pep
