@@ -31,3 +31,36 @@ To execute HOGVAX, call the python script with the necessary arguments, see the 
 ```shell
 python hogvax.py <arguments>
 ```
+The `--help` argument gives the following list of arguments.
+
+```angular2html
+  -h, --help            show this help message and exit
+  --k K, -k K           Maximal length of vaccine sequence
+  --populations POPULATIONS [POPULATIONS ...], -pop POPULATIONS [POPULATIONS ...]
+                        Target population(s). Default "World"
+  --peptides PEPTIDES, -pep PEPTIDES
+                        Preprocessed peptide file with every peptide in a new
+                        line.
+  --allele-frequencies F_DATA, -af F_DATA
+                        (Normalized) allele frequency file.
+  --ba-threshold BA_THRESHOLD, -t BA_THRESHOLD
+                        Binding affinities are converted to binary data, where 
+                        everything >= BA_THRESHOLD is set to 1.
+  --binding-affinities BA_MATRIX, -ba BA_MATRIX
+                        Binding affinity file for input peptides and alleles.
+  --required_epitopes REQUIRED_EPITOPES, -epi REQUIRED_EPITOPES
+                        File of peptides you want to be present in vaccine
+  --min-hits MIN_HITS, -mh MIN_HITS
+                        Minimum number of hits for an allele to be covered
+  --maximize-peptides   Maximize number of peptides in the vaccine in a second
+                        optimization
+  --embedding-length EMBEDDING_LENGTH
+                        Set length of embedding if used
+  --embedded-peptides EMBEDDED_PEPTIDES
+                        File containing embedded peptides
+  --embedded-epitope_features EMBEDDED_EPITOPE_FEATURES
+                        Path to embedded epitope features
+  --outdir OUTDIR, -o OUTDIR
+                        Output directory
+  --verbose [LOGGING_ENABLED], -v [LOGGING_ENABLED]
+```
