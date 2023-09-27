@@ -3,14 +3,14 @@ import re
 import find_superstrings
 
 
-def get_all_peptides(all_peptides, vax_peptides):
-    superstrings_mhc = find_superstrings.find_superstrings(all_peptides)
+def get_all_peptides(tree, leaves, vax_peptides, path):
+    superstrings_mhc = find_superstrings.aho_corasick_algorithm(tree, leaves, vax_peptides)
     pep_incl_substr = vax_peptides
     for pep in vax_peptides:
         if pep in superstrings_mhc:
             pep_incl_substr = pep_incl_substr + superstrings_mhc[pep]
 
-    print(len(set(pep_incl_substr)))
+    print('Number of peptides included in vaccine', len(set(pep_incl_substr)))
     return set(pep_incl_substr)
 
 
@@ -30,3 +30,7 @@ def recreate_unembedded_peptides(input_peptides, hogvax_peptides, embedding_leng
 
     with open(path + 'pep_out/' + str(len(input_peptides)) + '_chosen_peptides_hogvax_inc_substrings.txt', 'w') as file:
         file.write('\n'.join(unembedded_substr_incl_peptides))
+
+    with open(path + 'pep_out/' + str(len(input_peptides)) + '_hogvaxine.txt', 'a') as out:
+        out.write('> MHC optimized combined peptide vaccine sequence concatenated incl all substring peptides\n')
+        out.write(''.join(unembedded_substr_incl_peptides))

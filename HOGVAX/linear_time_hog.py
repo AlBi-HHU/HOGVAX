@@ -1,5 +1,6 @@
 import os
 import pydot
+import pickle
 import networkx as nx
 import aho_corasick_trie
 from collections import defaultdict
@@ -12,7 +13,6 @@ def log(string):
 
 def contract_ac(unmarked_nodes, slinks, graph):
     for node in unmarked_nodes:
-        log('Removing node ' + node)
         parent = list(graph.pred[node])[0]
         for succ in graph.successors(node):
             w = len(graph.nodes[succ]['string']) - len(graph.nodes[parent]['string'])
@@ -52,7 +52,6 @@ def mark_nodes(leaves, graph):
     # for each node initialize child nodes as empty set
     children = defaultdict(lambda: set())
     for leaf in leaves.values():
-        log('Current leaf ' + leaf)
         cur_node = leaf
         marked_nodes.add(cur_node)
         # while current node is not root node
@@ -70,9 +69,7 @@ def mark_nodes(leaves, graph):
 
 
 def compute_interval_size(node, graph):
-    log('Compute interval size for ' + node)
     if graph.out_degree(node) == 0:
-        log('Is leaf ' + node)
         graph.nodes[node]['interval_size'] = 0
         return 1
     else:
@@ -81,12 +78,9 @@ def compute_interval_size(node, graph):
         return num_leaves
 
 
-def compute_hog(pep_count, peptides, path, logging=False, dot_bool=False):
+def compute_hog(pep_count, leaves_dict, aho_corasick, path, logging=False, dot_bool=False):
     global logging_enabled
     logging_enabled = logging
-
-    log('Call aho corasick construction')
-    leaves_dict, aho_corasick = aho_corasick_trie.main(peptides, path, logging, dot_bool)
 
     # compute |R(u)| for each node u starting with root = 0
     log('Compute interval sizes')
@@ -94,7 +88,6 @@ def compute_hog(pep_count, peptides, path, logging=False, dot_bool=False):
     # mark nodes
     log('Execute linear time algorithm')
     md_nodes = mark_nodes(leaves_dict, aho_corasick)
-    log('Marked nodes' + ', '.join(md_nodes))
 
     # get nodes that we have to remove from aho corasick to get hog
     rm_nodes = set(aho_corasick.nodes) - md_nodes
@@ -115,10 +108,15 @@ def compute_hog(pep_count, peptides, path, logging=False, dot_bool=False):
     # write hog
     if not os.path.exists(path + 'pickle_files/'):
         os.mkdir(path + 'pickle_files/')
-    nx.write_gpickle(hog, path + 'pickle_files/' + pep_count + '_hog.gpickle')
+    with open(path + 'pickle_files/' + pep_count + '_hog.gpickle', 'wb') as file:
+        pickle.dump(hog, file, protocol=pickle.HIGHEST_PROTOCOL)
 
     if dot_bool:
-        dot = nx.drawing.nx_pydot.to_pydot(hog)
+        hog_copy = hog.copy()
+        for edge in hog_copy.edges:
+            hog_copy.edges[edge]['weight'] = str(hog_copy.edges[edge]['weight'])
+
+        dot = nx.drawing.nx_pydot.to_pydot(hog_copy)
         for i, e in enumerate(dot.get_edges()):
             attr = e.get_attributes()
             e.set_label(attr['weight'])

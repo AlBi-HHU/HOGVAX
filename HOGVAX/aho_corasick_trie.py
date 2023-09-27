@@ -46,6 +46,21 @@ def add_slinks(graph):
                 graph.nodes[i]['slink'] = get_slink(char, pred_slink, graph)
 
 
+# dictionary links connect nodes with nodes of the input that are reached by following the suffix link chain
+# is needed for the Aho Corasick algorithm to identify all substrings of a string quickly
+def add_dict_links(graph, input_nodes):
+    # starting from node we follow the suffix link chain and identify all suffixes that correspond to an input string
+    for node in graph.nodes:
+        slink_node = node
+        dict_links = []
+        while slink_node != '0':
+            if graph.nodes[slink_node]['slink'] in input_nodes.values():
+                dict_links.append(graph.nodes[graph.nodes[slink_node]['slink']]['string'])
+            slink_node = graph.nodes[slink_node]['slink']
+        if dict_links:
+            graph.nodes[node]['dictlink'] = dict_links
+
+
 def get_or_add_node(c, prefix, node, graph):
     for i in graph.successors(node):
         if graph.nodes[i]['char'] == c:
@@ -59,7 +74,7 @@ def get_or_add_node(c, prefix, node, graph):
 def calc_lps(word):
     lps_table = [0] * len(word)
     lps_len = 0 # longest prefix suffix length is 0 at beginning
-    i = 1   # first entry is always 0 so we start at index 1
+    i = 1   # first entry is always 0, so we start at index 1
     while i < len(word):
         if word[i] == word[lps_len]:
             lps_len += 1
@@ -76,6 +91,7 @@ def calc_lps(word):
 def insert(word, graph):
     cur_node = '0'
     word_nodes = [cur_node]
+    # calculate the longest prefix suffix of a word
     lps = calc_lps(word)
     prefix = ''
     for c, l in zip(word, lps):
@@ -103,36 +119,46 @@ def main(strings, out_dir, logging=True, dot_bool=False):
     leaves = {}
     for i, entry in enumerate(strings):
         word = entry
-        log('Insert word ' + word)
         leaves[word] = insert(word, DG)
     log('Built trie')
 
     log('Add slinks')
     add_slinks(DG)
 
+    log('Add dict links')
+    add_dict_links(DG, leaves)
+
     if not os.path.exists(out_dir + 'pickle_files/'):
         os.mkdir(out_dir + 'pickle_files/')
-    nx.write_gpickle(DG, out_dir + 'pickle_files/' + str(len(strings)) + '_aho_corasick.gpickle')
+    with open(out_dir + 'pickle_files/' + str(len(strings)) + '_aho_corasick.gpickle', 'wb') as file:
+        pickle.dump(DG, file, protocol=pickle.HIGHEST_PROTOCOL)
     with open(out_dir + 'pickle_files/' + str(len(strings)) + '_ac_leaves.pickle', 'wb') as handle:
         pickle.dump(leaves, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     # draw graph
     if dot_bool:
+        graph_copy = DG.copy()
+        for edge in graph_copy.edges:
+            graph_copy.edges[edge]['weight'] = str(graph_copy.edges[edge]['weight'])
+
         if not os.path.exists(out_dir + 'vis/'):
             os.mkdir(out_dir + 'vis/')
 
         log('Write dot')
-        dot = nx.drawing.nx_pydot.to_pydot(DG)
+        dot = nx.drawing.nx_pydot.to_pydot(graph_copy)
 
         for i, node in enumerate(dot.get_nodes()):
             attr = node.get_attributes()
-            # use int here cause root is first node in list and it is easier to check for index here
+            # use int here cause root is first node in list, and it is easier to check for index here
             if i == 0:
-                node.set_label('0 root')
+                node.set_label('0, root')
             else:
                 node.set_label(node.get_name() + ', ' + attr['string'])
-                edge = pydot.Edge(node.get_name(), attr['slink'], color='blue', style='dashed')
-                dot.add_edge(edge, )
+                slink = pydot.Edge(node.get_name(), attr['slink'], color='blue', style='dashed')
+                dot.add_edge(slink, )
+                if 'dictlink' in attr:
+                    dict_link = pydot.Edge(node.get_name(), attr['dictlink'], color='green', style='dashed')
+                    dot.add_edge(dict_link, )
 
         dot.write_png(out_dir + 'vis/aho_corasick_trie.png')
 

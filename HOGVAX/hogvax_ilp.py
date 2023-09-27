@@ -57,9 +57,6 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
     m.setParam('Seed', 42)
     random.seed(42)
     numpy.random.seed(42)
-    # only for debugging, lp files becomes very large
-    # if not os.path.exists(path + 'lp_out/'):
-    #     os.mkdir(path + 'lp_out/')
 
     # create hit variables
     log('Create hit variables')
@@ -163,11 +160,11 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
                 if node_b in leaves.values():
                     chosen_pep.append(graph.nodes[node_b]['string'])
 
-    # also only for more details and debugging
-    # if not os.path.exists(path + 'lp_out/'):
-    #     os.mkdir(path + 'lp_out/')
-    # m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.sol')
-    # m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.json')
+    # only for more details and debugging, as lp file gets really large
+    #if not os.path.exists(path + 'lp_out/'):
+    #    os.mkdir(path + 'lp_out/')
+    #m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.sol')
+    #m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.json')
 
     if not os.path.exists(path + 'pep_out/'):
         os.mkdir(path + 'pep_out/')
@@ -210,10 +207,10 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
         out.write(''.join(chosen_pep))
 
     # after solving add lazy constraints to lp file
-    for i, subtour in enumerate(save_for_later):
-        m.addConstr(1 <= gp.quicksum(x_edges[node_outer, node_inner] for node_outer, node_inner in sorted(x_edges)
-                                     if node_inner in subtour and node_outer not in subtour),
-                    'At least one incoming edge to subtour ' + str(i) + ' from the outside')
+    #for i, subtour in enumerate(save_for_later):
+    #    m.addConstr(1 <= gp.quicksum(x_edges[node_outer, node_inner] for node_outer, node_inner in sorted(x_edges)
+    #                                 if node_inner in subtour and node_outer not in subtour),
+    #                'At least one incoming edge to subtour ' + str(i) + ' from the outside')
 
     # only for debugging, lp file becomes quite large
     # m.write(path + 'lp_out/' + pep_count + '_vaccine_ilp_hog.lp')

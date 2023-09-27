@@ -1,5 +1,5 @@
 # MHC I single allele frequencies
-python hogvax.py --k 170 --outdir mhcI_unlinked --population World --peptides ../OptiVax_Data/Peptides/optivax_unlinked_mhc1_4512_filtered_peptides.pep --allele-frequencies ../OptiVax_Data/Frequencies/IEDB_population_frequency2392_normalized.pkl --ba-threshold 0.638 --binding-affinities ../OptiVax_Data/BindingAffinities/25June_mhc1_netmhc-4.1_pred_affinity_pivot.pkl.gz --min-hits 1 --verbose 1
+python hogvax.py --k 170 --outdir mhcI_unlinked --population World --peptides ../OptiVax_Data/Peptides/optivax_unlinked_mhc1_4512_filtered_peptides.pep --allele-frequencies ../OptiVax_Data/Frequencies/IEDB_population_frequency2392_normalized.pkl --ba-threshold 0.638 --binding-affinities ../OptiVax_Data/BindingAffinities/25June_mhc1_netmhc-4.1_pred_affinity_pivot.pkl.gz --min-hits 1 --verbose
 
 # MHC I haplotypye frequencies
 python hogvax.py --k 174 --outdir mhc1_robust --population White Black Asians --peptides ../OptiVax_Data/Peptides/optivax_unlinked_mhc1_4512_filtered_peptides.pep -af ../OptiVax_Data/Frequencies/haplotype_frequency_marry.pkl -t 0.638 -ba ../OptiVax_Data/BindingAffinities/all_mhc1_predictions_for_haplotypes.pkl.gz --min-hits 1
