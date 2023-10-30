@@ -9,14 +9,8 @@ HOGVAX uses the Gurobi solver for which a license is required. Further informati
 ## Data
 HLA haplotype and allele frequencies, binding affinity predictions, and input peptides are available in [Sciebo](https://uni-duesseldorf.sciebo.de/s/jRTn9Vpff78kLqi) (~2GB). You can use the [download script](download_data.sh) to download and extract the data directly.
 
-## Snakemake Pipeline
-The pipeline can be used to execute HOGVAX or the OCG approach. Additionally, the concatenation approach is always executed. Use the the [config file](Pipeline/envs/config.yaml) to adjust parameters for your execution. The pipeline can optionally be used for regional context embedding computations. Open a shell in the [Pipeline](Pipeline/) directory and execute the pipeline after adjusting the config file as follows:
-
-```shell
-snakemake --cores <cpu cores> --use-conda
-```
-
-In your specified output directory, you can find the computed vaccine sequences and chosen peptides in `ilp/pep_out/`.
+## Preprocessing
+The provided data is already in correct format for HOGVAX. If you use your own data, we provide you with a jupyter notebook file that you can use to convert your data into the format required by HOGVAX. You may need to modify the code for your purposes. Each step in the jupyter notebook file comes along with a short explanation.
 
 ## Stand-alone Version
 Open a shell in the [HOGVAX](HOGVAX/) folder and create the conda environment from the `yaml` file for proper execution of HOGVAX.
@@ -64,3 +58,13 @@ The `--help` argument gives the following list of arguments.
                         Output directory
   --verbose [LOGGING_ENABLED], -v [LOGGING_ENABLED]
 ```
+
+## Snakemake Pipeline
+The pipeline can be used to execute HOGVAX or the OCG approach. Additionally, the concatenation approach is always executed. Use the the [config file](Pipeline/envs/config.yaml) to adjust parameters for your execution. The pipeline can optionally be used for regional context embedding computations. Open a shell in the [Pipeline](Pipeline/) directory and execute the pipeline after adjusting the config file as follows:
+
+```shell
+snakemake --cores <cpu cores> --use-conda
+```
+
+In your specified output directory, you can find the computed vaccine sequences and chosen peptides in `ilp/pep_out/`.
+
