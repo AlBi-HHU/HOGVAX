@@ -54,6 +54,8 @@ def hogvax(k, alleles, freq_vector, B_matrix, leaves, pep_count, graph, path, mi
     m = gp.Model('ivp_on_hog')
     # set time limit to 48 hours
     m.setParam('TimeLimit', 172800)
+    # optional gap
+    # m.setParam('MIPGap', 0.01)
     m.setParam('Seed', 42)
     random.seed(42)
     numpy.random.seed(42)
