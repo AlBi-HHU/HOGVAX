@@ -12,7 +12,7 @@ Sara C. Schulte, Alexander T. Dilthey, Gunnar W. Klau, *HOGVAX: Exploiting epito
 HOGVAX uses the Gurobi solver for which a license is required. Further information can be found [here](https://www.gurobi.com/academia/academic-program-and-licenses/). Please also make sure that Conda is properly installed. For more information, please follow this [link](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
 ## Data
-HLA haplotype and allele frequencies, binding affinity predictions, and input peptides are available in the [OptiVax_Data.zip](/OptiVax_Data.zip) folder. Please unzip the data folder first. 
+HLA haplotype and allele frequencies, binding affinity predictions, and input peptides are available on [Zenodo](https://doi.org/10.5281/zenodo.10055170) in the OptiVax_Data.zip folder. Click [here](https://zenodo.org/records/10450477/files/OptiVax_Data.zip?download=1) and the download will start immediately (~2GB). Please unzip the data folder after downloading. 
 
 ## Preprocessing
 The provided data is already in correct format for HOGVAX. If you use your own data, we provide you with a jupyter notebook file that you can use to convert your data into the format required by HOGVAX. You may need to modify the code for your purposes. Each step in the jupyter notebook file comes along with a short explanation.
